@@ -1,31 +1,33 @@
-package pendulum.view;
+package pendulum;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Stack;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class GuiView extends JFrame {
+import pendulum.view.Window;
 
-    // Serialization number
-    private static final long serialVersionUID = 6776430621716469058L;
+@SuppressWarnings("serial")
+public class Pendulum extends JFrame {
 
     // Stack of windows maintained by the frame
-    private final Stack<BaseWindow> windowStack;
+    protected final Stack<Window> windowStack;
 
-    private String appName;
+    // Name of the application
+    protected String appName;
 
     /**
      * Initializes gui application
      */
-    public GuiView(String appName, BaseWindow initialWindow) {
+    public Pendulum(String appName, Window initialWindow) {
         super(appName);
         this.appName = appName;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.windowStack = new Stack<BaseWindow>();
+        this.windowStack = new Stack<Window>();
         this.windowStack.push(initialWindow);
         this.add(initialWindow);
     }
@@ -44,7 +46,7 @@ public class GuiView extends JFrame {
      *
      * @param window
      */
-    public void pushWindow(BaseWindow window) {
+    public void pushWindow(Window window) {
         this.setActiveWindow(this.windowStack.peek(), window);
         this.windowStack.push(window);
     }
@@ -53,8 +55,8 @@ public class GuiView extends JFrame {
      * Pops a window from the stack and updates the gui.
      */
     public void popWindow() {
-        BaseWindow prev = this.windowStack.pop();
-        BaseWindow next = this.windowStack.peek();
+        Window prev = this.windowStack.pop();
+        Window next = this.windowStack.peek();
         this.setActiveWindow(prev, next);
     }
 
@@ -64,7 +66,7 @@ public class GuiView extends JFrame {
      * @param previous Last window
      * @param next Current window
      */
-    private void setActiveWindow(BaseWindow previous, BaseWindow next) {
+    protected void setActiveWindow(Window previous, Window next) {
         this.add(next);
         this.remove(previous);
         if (next.getTitle() == null) {
@@ -73,9 +75,6 @@ public class GuiView extends JFrame {
             this.setTitle(this.appName + " | " + next.getTitle());
         }
         next.focus();
-        if (! next.getTitle().equals("Login")) {
-            this.setMenu(next);
-        }
         this.validate();
         this.repaint();
         this.render();
@@ -86,8 +85,7 @@ public class GuiView extends JFrame {
      *
      * @param currentWindow
      */
-    private void setMenu(BaseWindow currentWindow) {
-        final BaseWindow current = currentWindow;
+    protected void setMenu(Window currentWindow) {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
 
@@ -103,7 +101,7 @@ public class GuiView extends JFrame {
         quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GuiView.this.dispose();
+                Pendulum.this.dispose();
                 System.exit(0);
             }
         });
@@ -122,7 +120,7 @@ public class GuiView extends JFrame {
         this.setVisible(true);
     }
 
-    public Stack<BaseWindow> getWindowStack() {
+    public Stack<Window> getWindowStack() {
         return this.windowStack;
     }
 

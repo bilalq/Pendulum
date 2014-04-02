@@ -1,5 +1,5 @@
 package app.views;
-import pendulum.view.Window;
+import pendulum.gui.Window;
 
 import app.views.partials.LoginForm;
 

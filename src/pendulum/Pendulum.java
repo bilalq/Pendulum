@@ -9,7 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import pendulum.view.Window;
+import pendulum.gui.Window;
 
 @SuppressWarnings("serial")
 public class Pendulum extends JFrame {
@@ -22,6 +22,9 @@ public class Pendulum extends JFrame {
 
     /**
      * Initializes gui application
+     *
+     * @param appName Name of application that is used as the title prefix
+     * @param initialWindow Initial window to launch when the app is rendered
      */
     public Pendulum(String appName, Window initialWindow) {
         super(appName);
@@ -38,6 +41,7 @@ public class Pendulum extends JFrame {
     public void render() {
         this.pack();
         this.setLocationRelativeTo(null);
+        this.setMenu();
         this.setVisible(true);
     }
 
@@ -53,11 +57,14 @@ public class Pendulum extends JFrame {
 
     /**
      * Pops a window from the stack and updates the gui.
+     *
+     * @return Window that was popped from the stack
      */
-    public void popWindow() {
+    public Window popWindow() {
         Window prev = this.windowStack.pop();
         Window next = this.windowStack.peek();
         this.setActiveWindow(prev, next);
+        return prev;
     }
 
     /**
@@ -85,7 +92,8 @@ public class Pendulum extends JFrame {
      *
      * @param currentWindow
      */
-    protected void setMenu(Window currentWindow) {
+    protected void setMenu() {
+        Window currentWindow = this.windowStack.peek();
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
 

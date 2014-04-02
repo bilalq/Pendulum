@@ -1,4 +1,4 @@
-package pendulum.view;
+package pendulum.gui;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,11 @@ import pendulum.Pendulum;
 @SuppressWarnings("serial")
 public abstract class Window extends JPanel {
 
-    // Title of panel
+    // Title of window
     protected String title;
 
     // List of menu items for this window
-    protected List<JMenuItem> menuItems;
+    protected final List<JMenuItem> menuItems = new ArrayList<JMenuItem>();
 
     public Window() {
         super();
@@ -45,36 +45,36 @@ public abstract class Window extends JPanel {
      * @param window
      */
     public void open(Window window) {
-        Pendulum parent = this.getFrame();
-        parent.pushWindow(window);
+        Pendulum frame = this.getFrame();
+        frame.pushWindow(window);
     }
 
     /**
      * Closes current window and pops from the stack.
      */
     public void close() {
-        Pendulum parent = this.getFrame();
-        parent.popWindow();
+        Pendulum frame = this.getFrame();
+        frame.popWindow();
     }
 
     /**
-     * Get reference to parent frame.
+     * Get reference to the root Pendulum instance.
      *
-     * @return GuiView Root GUI frame of application
+     * @return Pendulum instance
      */
     public Pendulum getFrame() {
         return (Pendulum) SwingUtilities.getWindowAncestor(this);
     }
 
     /**
-     * Method that is triggered when a panel is brought into focus.
+     * Method that is triggered when a window is brought into focus.
      */
     public void focus() {
         this.onFocus();
     }
 
     /**
-     * Redraws current panel.
+     * Redraws current window.
      */
     public void redraw() {
         this.getFrame().redraw();
@@ -85,14 +85,11 @@ public abstract class Window extends JPanel {
     }
 
     public List<JMenuItem> getMenuItems() {
-        if (menuItems == null) {
-            this.menuItems = new ArrayList<JMenuItem>();
-        }
         return this.menuItems;
     }
 
     public Window addMenuItem(JMenuItem item) {
-        this.getMenuItems().add(item);
+        this.menuItems.add(item);
         return this;
     }
 }

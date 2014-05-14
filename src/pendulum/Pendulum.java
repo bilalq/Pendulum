@@ -14,10 +14,10 @@ import pendulum.gui.Window;
 @SuppressWarnings("serial")
 public class Pendulum extends JFrame {
 
-    // Stack of windows maintained by the frame
+    /** Stack of windows maintained by the frame */
     protected final Stack<Window> windowStack;
 
-    // Name of the application
+    /** Name of the application */
     protected String appName;
 
     /**
@@ -128,6 +128,9 @@ public class Pendulum extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Retrieves the stack of windows in the frame
+     */
     public Stack<Window> getWindowStack() {
         return this.windowStack;
     }

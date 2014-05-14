@@ -12,10 +12,10 @@ import pendulum.Pendulum;
 @SuppressWarnings("serial")
 public abstract class Window extends JPanel {
 
-    // Title of window
+    /** Title of window */
     protected String title;
 
-    // List of menu items for this window
+    /** List of menu items for this window */
     protected final List<JMenuItem> menuItems = new ArrayList<JMenuItem>();
 
     public Window() {
@@ -80,14 +80,26 @@ public abstract class Window extends JPanel {
         this.getFrame().redraw();
     }
 
+    /**
+     * Gets the title of the window
+     * */
     public String getTitle() {
         return this.title;
     }
 
+    /**
+     * Gets the list of menu items in the window
+     */
     public List<JMenuItem> getMenuItems() {
         return this.menuItems;
     }
 
+    /**
+     * Helper function for adding an item to the window menu
+     *
+     * @param item The menu item to add
+     * @return The window itself to allow for fluent chaining
+     */
     public Window addMenuItem(JMenuItem item) {
         this.menuItems.add(item);
         return this;

@@ -14,7 +14,10 @@ import java.io.Serializable;
  */
 public abstract class Model implements Serializable {
 
+    /** Serialization id */
     private static final long serialVersionUID = -7314038647882308441L;
+
+    /** Unique identifier of the model instance */
     protected final String id;
 
     /**
